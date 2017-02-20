@@ -9,7 +9,7 @@ import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import nl.rubensten.texifyidea.psi.*;
+import nl.rubensten.texifyidea.latex.psi.*;
 
 public class LatexParameterImpl extends ASTWrapperPsiElement implements LatexParameter {
 

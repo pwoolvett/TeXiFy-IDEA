@@ -10,7 +10,7 @@ import com.intellij.psi.PsiElementVisitor;
 
 import static nl.rubensten.texifyidea.latex.psi.LatexTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import nl.rubensten.texifyidea.psi.*;
+import nl.rubensten.texifyidea.latex.psi.*;
 
 public class LatexCommentImpl extends ASTWrapperPsiElement implements LatexComment {
 
