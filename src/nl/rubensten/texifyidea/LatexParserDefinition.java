@@ -13,8 +13,8 @@ import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import nl.rubensten.texifyidea.file.LatexFile;
-import nl.rubensten.texifyidea.parser.LatexParser;
-import nl.rubensten.texifyidea.psi.LatexTypes;
+import nl.rubensten.texifyidea.latex.parser.LatexParser;
+import nl.rubensten.texifyidea.latex.psi.LatexTypes;
 import org.jetbrains.annotations.NotNull;
 
 /**

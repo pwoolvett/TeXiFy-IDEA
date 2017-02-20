@@ -5,6 +5,7 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.PsiElement;
+import nl.rubensten.texifyidea.latex.psi.*;
 import nl.rubensten.texifyidea.psi.*;
 import org.jetbrains.annotations.NotNull;
 

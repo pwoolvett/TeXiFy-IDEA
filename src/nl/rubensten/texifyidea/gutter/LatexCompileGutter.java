@@ -6,7 +6,7 @@ import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.psi.PsiElement;
 import nl.rubensten.texifyidea.TexifyIcons;
-import nl.rubensten.texifyidea.psi.LatexCommands;
+import nl.rubensten.texifyidea.latex.psi.LatexCommands;
 import nl.rubensten.texifyidea.util.TexifyUtil;
 import org.jetbrains.annotations.Nullable;
 

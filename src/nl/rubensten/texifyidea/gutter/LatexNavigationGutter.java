@@ -7,8 +7,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiManager;
 import nl.rubensten.texifyidea.TexifyIcons;
-import nl.rubensten.texifyidea.psi.LatexCommands;
-import nl.rubensten.texifyidea.psi.LatexRequiredParam;
+import nl.rubensten.texifyidea.latex.psi.LatexCommands;
+import nl.rubensten.texifyidea.latex.psi.LatexRequiredParam;
 import nl.rubensten.texifyidea.util.TexifyUtil;
 import org.jetbrains.annotations.NotNull;
 

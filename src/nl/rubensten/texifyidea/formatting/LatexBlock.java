@@ -13,14 +13,14 @@ import com.intellij.psi.TokenType;
 import com.intellij.psi.formatter.common.AbstractBlock;
 import com.intellij.psi.tree.TokenSet;
 import nl.rubensten.texifyidea.file.LatexFile;
-import nl.rubensten.texifyidea.psi.LatexTypes;
+import nl.rubensten.texifyidea.latex.psi.LatexTypes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static nl.rubensten.texifyidea.psi.LatexPsiUtil.hasElementType;
+import static nl.rubensten.texifyidea.latex.psi.LatexPsiUtil.hasElementType;
 
 /**
  * @author Sten Wessel

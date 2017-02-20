@@ -12,7 +12,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ArrayUtil;
 import nl.rubensten.texifyidea.lang.Argument;
 import nl.rubensten.texifyidea.lang.LatexNoMathCommand;
-import nl.rubensten.texifyidea.psi.LatexCommands;
+import nl.rubensten.texifyidea.latex.psi.LatexCommands;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

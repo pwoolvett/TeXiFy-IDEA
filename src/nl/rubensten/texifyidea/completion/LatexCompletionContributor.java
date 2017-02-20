@@ -5,8 +5,8 @@ import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.patterns.PlatformPatterns;
 import nl.rubensten.texifyidea.LatexLanguage;
 import nl.rubensten.texifyidea.lang.LatexMode;
-import nl.rubensten.texifyidea.psi.LatexMathEnvironment;
-import nl.rubensten.texifyidea.psi.LatexTypes;
+import nl.rubensten.texifyidea.latex.psi.LatexMathEnvironment;
+import nl.rubensten.texifyidea.latex.psi.LatexTypes;
 
 /**
  * @author Sten Wessel

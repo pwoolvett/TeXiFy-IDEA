@@ -6,7 +6,7 @@ import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.tree.IElementType;
 import nl.rubensten.texifyidea.LatexLexerAdapter;
-import nl.rubensten.texifyidea.psi.LatexTypes;
+import nl.rubensten.texifyidea.latex.psi.LatexTypes;
 import org.jetbrains.annotations.NotNull;
 
 /**

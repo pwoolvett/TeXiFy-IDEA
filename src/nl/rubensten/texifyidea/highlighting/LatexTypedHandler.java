@@ -9,7 +9,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IElementType;
 import nl.rubensten.texifyidea.file.LatexFile;
-import nl.rubensten.texifyidea.psi.LatexTypes;
+import nl.rubensten.texifyidea.latex.psi.LatexTypes;
 import org.jetbrains.annotations.NotNull;
 
 /**

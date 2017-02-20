@@ -8,8 +8,8 @@ import com.intellij.openapi.editor.FoldingGroup;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import nl.rubensten.texifyidea.lang.LatexMathCommand;
-import nl.rubensten.texifyidea.psi.LatexCommands;
-import nl.rubensten.texifyidea.psi.LatexMathEnvironment;
+import nl.rubensten.texifyidea.latex.psi.LatexCommands;
+import nl.rubensten.texifyidea.latex.psi.LatexMathEnvironment;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

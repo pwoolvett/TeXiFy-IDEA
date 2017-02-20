@@ -7,9 +7,9 @@ import nl.rubensten.texifyidea.file.BibliographyFileType;
 import nl.rubensten.texifyidea.file.ClassFileType;
 import nl.rubensten.texifyidea.file.LatexFileType;
 import nl.rubensten.texifyidea.file.StyleFileType;
-import nl.rubensten.texifyidea.psi.LatexCommands;
-import nl.rubensten.texifyidea.psi.LatexParameter;
-import nl.rubensten.texifyidea.psi.LatexRequiredParam;
+import nl.rubensten.texifyidea.latex.psi.LatexCommands;
+import nl.rubensten.texifyidea.latex.psi.LatexParameter;
+import nl.rubensten.texifyidea.latex.psi.LatexRequiredParam;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
