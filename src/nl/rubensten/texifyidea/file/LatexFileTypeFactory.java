@@ -14,5 +14,6 @@ public class LatexFileTypeFactory extends FileTypeFactory {
         consumer.consume(LatexFileType.INSTANCE, LatexFileType.INSTANCE.getDefaultExtension());
         consumer.consume(StyleFileType.INSTANCE, StyleFileType.INSTANCE.getDefaultExtension());
         consumer.consume(ClassFileType.INSTANCE, ClassFileType.INSTANCE.getDefaultExtension());
+        consumer.consume(BibliographyFileType.INSTANCE, BibliographyFileType.INSTANCE.getDefaultExtension());
     }
 }

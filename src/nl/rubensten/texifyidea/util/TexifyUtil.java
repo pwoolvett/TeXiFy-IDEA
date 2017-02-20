@@ -3,6 +3,7 @@ package nl.rubensten.texifyidea.util;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.PsiElement;
+import nl.rubensten.texifyidea.file.BibliographyFileType;
 import nl.rubensten.texifyidea.file.ClassFileType;
 import nl.rubensten.texifyidea.file.LatexFileType;
 import nl.rubensten.texifyidea.file.StyleFileType;
@@ -44,6 +45,8 @@ public class TexifyUtil {
                 return ClassFileType.INSTANCE;
             case "sty":
                 return StyleFileType.INSTANCE;
+            case "bib":
+                return BibliographyFileType.INSTANCE;
             default:
                 return LatexFileType.INSTANCE;
         }
