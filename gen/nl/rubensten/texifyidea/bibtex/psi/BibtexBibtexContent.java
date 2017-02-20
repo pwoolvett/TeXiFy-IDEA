@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface BibtexContent extends PsiElement {
+public interface BibtexBibtexContent extends PsiElement {
 
-  @Nullable
-  BibtexMathEnvironment getMathEnvironment();
+  @NotNull
+  List<BibtexBibtexEntry> getBibtexEntryList();
 
-  @Nullable
-  BibtexNoMathContent getNoMathContent();
+  @NotNull
+  List<BibtexComment> getCommentList();
 
 }

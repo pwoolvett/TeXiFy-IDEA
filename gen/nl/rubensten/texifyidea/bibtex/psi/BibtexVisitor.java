@@ -15,6 +15,26 @@ public class BibtexVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitBibtexContent(@NotNull BibtexBibtexContent o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBibtexEntry(@NotNull BibtexBibtexEntry o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBibtexEntryGroup(@NotNull BibtexBibtexEntryGroup o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBibtexEntryGroupContents(@NotNull BibtexBibtexEntryGroupContents o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBibtexEntryTitle(@NotNull BibtexBibtexEntryTitle o) {
+    visitPsiElement(o);
+  }
+
   public void visitBibtexKey(@NotNull BibtexBibtexKey o) {
     visitPsiElement(o);
   }
@@ -39,10 +59,6 @@ public class BibtexVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitContent(@NotNull BibtexContent o) {
-    visitPsiElement(o);
-  }
-
   public void visitDisplayMath(@NotNull BibtexDisplayMath o) {
     visitPsiElement(o);
   }
@@ -55,7 +71,7 @@ public class BibtexVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitLatexFile(@NotNull BibtexLatexFile o) {
+  public void visitLatexContent(@NotNull BibtexLatexContent o) {
     visitPsiElement(o);
   }
 

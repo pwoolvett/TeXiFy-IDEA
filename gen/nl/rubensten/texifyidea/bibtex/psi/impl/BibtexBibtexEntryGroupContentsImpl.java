@@ -4,19 +4,21 @@ package nl.rubensten.texifyidea.bibtex.psi.impl;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
+import static nl.rubensten.texifyidea.bibtex.psi.BibtexTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import nl.rubensten.texifyidea.bibtex.psi.*;
 
-public class BibtexLatexFileImpl extends ASTWrapperPsiElement implements BibtexLatexFile {
+public class BibtexBibtexEntryGroupContentsImpl extends ASTWrapperPsiElement implements BibtexBibtexEntryGroupContents {
 
-  public BibtexLatexFileImpl(ASTNode node) {
+  public BibtexBibtexEntryGroupContentsImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull BibtexVisitor visitor) {
-    visitor.visitLatexFile(this);
+    visitor.visitBibtexEntryGroupContents(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -26,8 +28,14 @@ public class BibtexLatexFileImpl extends ASTWrapperPsiElement implements BibtexL
 
   @Override
   @NotNull
-  public List<BibtexContent> getContentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, BibtexContent.class);
+  public BibtexBibtexEntryTitle getBibtexEntryTitle() {
+    return findNotNullChildByClass(BibtexBibtexEntryTitle.class);
+  }
+
+  @Override
+  @NotNull
+  public List<BibtexBibtexKeyValuePair> getBibtexKeyValuePairList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, BibtexBibtexKeyValuePair.class);
   }
 
 }

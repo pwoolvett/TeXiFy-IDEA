@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface BibtexBibtexString extends PsiElement {
 
   @NotNull
-  PsiElement getNormalText();
+  BibtexLatexContent getLatexContent();
 
 }

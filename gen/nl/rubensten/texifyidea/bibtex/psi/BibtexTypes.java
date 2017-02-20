@@ -10,17 +10,21 @@ public interface BibtexTypes {
 
   IElementType BIBTEX_BRACE_VALUE = new BibtexElementType("BIBTEX_BRACE_VALUE");
   IElementType BIBTEX_CONCATENATE_VALUE = new BibtexElementType("BIBTEX_CONCATENATE_VALUE");
+  IElementType BIBTEX_CONTENT = new BibtexElementType("BIBTEX_CONTENT");
+  IElementType BIBTEX_ENTRY = new BibtexElementType("BIBTEX_ENTRY");
+  IElementType BIBTEX_ENTRY_GROUP = new BibtexElementType("BIBTEX_ENTRY_GROUP");
+  IElementType BIBTEX_ENTRY_GROUP_CONTENTS = new BibtexElementType("BIBTEX_ENTRY_GROUP_CONTENTS");
+  IElementType BIBTEX_ENTRY_TITLE = new BibtexElementType("BIBTEX_ENTRY_TITLE");
   IElementType BIBTEX_KEY = new BibtexElementType("BIBTEX_KEY");
   IElementType BIBTEX_KEY_VALUE_PAIR = new BibtexElementType("BIBTEX_KEY_VALUE_PAIR");
   IElementType BIBTEX_STRING = new BibtexElementType("BIBTEX_STRING");
   IElementType BIBTEX_VALUE = new BibtexElementType("BIBTEX_VALUE");
   IElementType COMMANDS = new BibtexElementType("COMMANDS");
   IElementType COMMENT = new BibtexElementType("COMMENT");
-  IElementType CONTENT = new BibtexElementType("CONTENT");
   IElementType DISPLAY_MATH = new BibtexElementType("DISPLAY_MATH");
   IElementType GROUP = new BibtexElementType("GROUP");
   IElementType INLINE_MATH = new BibtexElementType("INLINE_MATH");
-  IElementType LATEX_FILE = new BibtexElementType("LATEX_FILE");
+  IElementType LATEX_CONTENT = new BibtexElementType("LATEX_CONTENT");
   IElementType MATH_ENVIRONMENT = new BibtexElementType("MATH_ENVIRONMENT");
   IElementType NO_MATH_CONTENT = new BibtexElementType("NO_MATH_CONTENT");
   IElementType OPEN_GROUP = new BibtexElementType("OPEN_GROUP");
@@ -30,9 +34,8 @@ public interface BibtexTypes {
 
   IElementType ASSIGNMENT = new BibtexTokenType("=");
   IElementType CITATION_KEY = new BibtexTokenType("CITATION_KEY");
-  IElementType CITATION_TYPE = new BibtexTokenType("CITATION_TYPE");
-  IElementType CLOSE_BRACE = new BibtexTokenType("CLOSE_BRACE");
-  IElementType CLOSE_BRACKET = new BibtexTokenType("CLOSE_BRACKET");
+  IElementType CLOSE_BRACE = new BibtexTokenType("}");
+  IElementType CLOSE_BRACKET = new BibtexTokenType("]");
   IElementType COMMAND_TOKEN = new BibtexTokenType("COMMAND_TOKEN");
   IElementType COMMENT_TOKEN = new BibtexTokenType("COMMENT_TOKEN");
   IElementType CONCATENATE = new BibtexTokenType("#");
@@ -41,11 +44,12 @@ public interface BibtexTypes {
   IElementType INLINE_MATH_END = new BibtexTokenType("$");
   IElementType INLINE_MATH_START = new BibtexTokenType("INLINE_MATH_START");
   IElementType NORMAL_TEXT = new BibtexTokenType("NORMAL_TEXT");
-  IElementType OPEN_BRACE = new BibtexTokenType("OPEN_BRACE");
-  IElementType OPEN_BRACKET = new BibtexTokenType("OPEN_BRACKET");
+  IElementType OPEN_BRACE = new BibtexTokenType("{");
+  IElementType OPEN_BRACKET = new BibtexTokenType("[");
   IElementType QUOTATION_MARK = new BibtexTokenType("\"");
   IElementType SEPERATOR = new BibtexTokenType(",");
   IElementType STAR = new BibtexTokenType("*");
+  IElementType TYPE_TOKEN = new BibtexTokenType("TYPE_TOKEN");
   IElementType VALUE = new BibtexTokenType("VALUE");
 
   class Factory {
@@ -56,6 +60,21 @@ public interface BibtexTypes {
       }
       else if (type == BIBTEX_CONCATENATE_VALUE) {
         return new BibtexBibtexConcatenateValueImpl(node);
+      }
+      else if (type == BIBTEX_CONTENT) {
+        return new BibtexBibtexContentImpl(node);
+      }
+      else if (type == BIBTEX_ENTRY) {
+        return new BibtexBibtexEntryImpl(node);
+      }
+      else if (type == BIBTEX_ENTRY_GROUP) {
+        return new BibtexBibtexEntryGroupImpl(node);
+      }
+      else if (type == BIBTEX_ENTRY_GROUP_CONTENTS) {
+        return new BibtexBibtexEntryGroupContentsImpl(node);
+      }
+      else if (type == BIBTEX_ENTRY_TITLE) {
+        return new BibtexBibtexEntryTitleImpl(node);
       }
       else if (type == BIBTEX_KEY) {
         return new BibtexBibtexKeyImpl(node);
@@ -75,9 +94,6 @@ public interface BibtexTypes {
       else if (type == COMMENT) {
         return new BibtexCommentImpl(node);
       }
-      else if (type == CONTENT) {
-        return new BibtexContentImpl(node);
-      }
       else if (type == DISPLAY_MATH) {
         return new BibtexDisplayMathImpl(node);
       }
@@ -87,8 +103,8 @@ public interface BibtexTypes {
       else if (type == INLINE_MATH) {
         return new BibtexInlineMathImpl(node);
       }
-      else if (type == LATEX_FILE) {
-        return new BibtexLatexFileImpl(node);
+      else if (type == LATEX_CONTENT) {
+        return new BibtexLatexContentImpl(node);
       }
       else if (type == MATH_ENVIRONMENT) {
         return new BibtexMathEnvironmentImpl(node);

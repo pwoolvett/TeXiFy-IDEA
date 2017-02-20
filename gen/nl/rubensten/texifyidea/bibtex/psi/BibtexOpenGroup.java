@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface BibtexOpenGroup extends PsiElement {
 
   @NotNull
-  List<BibtexContent> getContentList();
+  List<BibtexLatexContent> getLatexContentList();
 
 }

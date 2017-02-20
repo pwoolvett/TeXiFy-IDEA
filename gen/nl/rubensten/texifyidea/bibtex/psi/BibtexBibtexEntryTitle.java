@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface BibtexLatexFile extends PsiElement {
+public interface BibtexBibtexEntryTitle extends PsiElement {
 
   @NotNull
-  List<BibtexContent> getContentList();
+  PsiElement getCitationKey();
 
 }

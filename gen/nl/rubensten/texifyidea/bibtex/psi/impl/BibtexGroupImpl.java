@@ -4,8 +4,10 @@ package nl.rubensten.texifyidea.bibtex.psi.impl;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
+import static nl.rubensten.texifyidea.bibtex.psi.BibtexTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import nl.rubensten.texifyidea.bibtex.psi.*;
 
@@ -26,8 +28,8 @@ public class BibtexGroupImpl extends ASTWrapperPsiElement implements BibtexGroup
 
   @Override
   @NotNull
-  public List<BibtexContent> getContentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, BibtexContent.class);
+  public List<BibtexLatexContent> getLatexContentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, BibtexLatexContent.class);
   }
 
 }

@@ -7,6 +7,7 @@ import static nl.rubensten.texifyidea.bibtex.psi.BibtexTypes.*;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.tree.TokenSet;
 import com.intellij.lang.PsiParser;
 import com.intellij.lang.LightPsiParser;
 
@@ -28,6 +29,21 @@ public class BibtexParser implements PsiParser, LightPsiParser {
     else if (t == BIBTEX_CONCATENATE_VALUE) {
       r = bibtex_concatenate_value(b, 0);
     }
+    else if (t == BIBTEX_CONTENT) {
+      r = bibtex_content(b, 0);
+    }
+    else if (t == BIBTEX_ENTRY) {
+      r = bibtex_entry(b, 0);
+    }
+    else if (t == BIBTEX_ENTRY_GROUP) {
+      r = bibtex_entry_group(b, 0);
+    }
+    else if (t == BIBTEX_ENTRY_GROUP_CONTENTS) {
+      r = bibtex_entry_group_contents(b, 0);
+    }
+    else if (t == BIBTEX_ENTRY_TITLE) {
+      r = bibtex_entry_title(b, 0);
+    }
     else if (t == BIBTEX_KEY) {
       r = bibtex_key(b, 0);
     }
@@ -46,9 +62,6 @@ public class BibtexParser implements PsiParser, LightPsiParser {
     else if (t == COMMENT) {
       r = comment(b, 0);
     }
-    else if (t == CONTENT) {
-      r = content(b, 0);
-    }
     else if (t == DISPLAY_MATH) {
       r = display_math(b, 0);
     }
@@ -58,8 +71,8 @@ public class BibtexParser implements PsiParser, LightPsiParser {
     else if (t == INLINE_MATH) {
       r = inline_math(b, 0);
     }
-    else if (t == LATEX_FILE) {
-      r = latexFile(b, 0);
+    else if (t == LATEX_CONTENT) {
+      r = latex_content(b, 0);
     }
     else if (t == MATH_ENVIRONMENT) {
       r = math_environment(b, 0);
@@ -86,42 +99,40 @@ public class BibtexParser implements PsiParser, LightPsiParser {
   }
 
   protected boolean parse_root_(IElementType t, PsiBuilder b, int l) {
-    return bibtex_entry(b, l + 1);
+    return bibtexFile(b, l + 1);
   }
 
   /* ********************************************************** */
-  // OPEN_BRACE NORMAL_TEXT CLOSE_BRACE
+  // bibtex_content
+  static boolean bibtexFile(PsiBuilder b, int l) {
+    return bibtex_content(b, l + 1);
+  }
+
+  /* ********************************************************** */
+  // OPEN_BRACE latex_content CLOSE_BRACE
   public static boolean bibtex_brace_value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "bibtex_brace_value")) return false;
     if (!nextTokenIs(b, OPEN_BRACE)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, OPEN_BRACE, NORMAL_TEXT, CLOSE_BRACE);
+    r = consumeToken(b, OPEN_BRACE);
+    r = r && latex_content(b, l + 1);
+    r = r && consumeToken(b, CLOSE_BRACE);
     exit_section_(b, m, BIBTEX_BRACE_VALUE, r);
     return r;
   }
 
   /* ********************************************************** */
-  // (bibtex_string) CONCATENATE (bibtex_string | bibtex_concatenate_value)
+  // bibtex_string CONCATENATE (bibtex_string | bibtex_concatenate_value)
   public static boolean bibtex_concatenate_value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "bibtex_concatenate_value")) return false;
     if (!nextTokenIs(b, QUOTATION_MARK)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = bibtex_concatenate_value_0(b, l + 1);
+    r = bibtex_string(b, l + 1);
     r = r && consumeToken(b, CONCATENATE);
     r = r && bibtex_concatenate_value_2(b, l + 1);
     exit_section_(b, m, BIBTEX_CONCATENATE_VALUE, r);
-    return r;
-  }
-
-  // (bibtex_string)
-  private static boolean bibtex_concatenate_value_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "bibtex_concatenate_value_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = bibtex_string(b, l + 1);
-    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -137,38 +148,102 @@ public class BibtexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // CITATION_TYPE OPEN_BRACKET VALUE SEPERATOR (bibtex_key_value_pair)* CLOSE_BRACE
-  static boolean bibtex_entry(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "bibtex_entry")) return false;
-    if (!nextTokenIs(b, CITATION_TYPE)) return false;
+  // (comment | bibtex_entry)*
+  public static boolean bibtex_content(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "bibtex_content")) return false;
+    Marker m = enter_section_(b, l, _NONE_, BIBTEX_CONTENT, "<bibtex content>");
+    int c = current_position_(b);
+    while (true) {
+      if (!bibtex_content_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "bibtex_content", c)) break;
+      c = current_position_(b);
+    }
+    exit_section_(b, l, m, true, false, null);
+    return true;
+  }
+
+  // comment | bibtex_entry
+  private static boolean bibtex_content_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "bibtex_content_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, CITATION_TYPE, OPEN_BRACKET, VALUE, SEPERATOR);
-    r = r && bibtex_entry_4(b, l + 1);
-    r = r && consumeToken(b, CLOSE_BRACE);
+    r = comment(b, l + 1);
+    if (!r) r = bibtex_entry(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
+  /* ********************************************************** */
+  // TYPE_TOKEN bibtex_entry_group
+  public static boolean bibtex_entry(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "bibtex_entry")) return false;
+    if (!nextTokenIs(b, TYPE_TOKEN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, TYPE_TOKEN);
+    r = r && bibtex_entry_group(b, l + 1);
+    exit_section_(b, m, BIBTEX_ENTRY, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // OPEN_BRACE bibtex_entry_group_contents CLOSE_BRACE
+  public static boolean bibtex_entry_group(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "bibtex_entry_group")) return false;
+    if (!nextTokenIs(b, OPEN_BRACE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, OPEN_BRACE);
+    r = r && bibtex_entry_group_contents(b, l + 1);
+    r = r && consumeToken(b, CLOSE_BRACE);
+    exit_section_(b, m, BIBTEX_ENTRY_GROUP, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // bibtex_entry_title (bibtex_key_value_pair)*
+  public static boolean bibtex_entry_group_contents(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "bibtex_entry_group_contents")) return false;
+    if (!nextTokenIs(b, CITATION_KEY)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = bibtex_entry_title(b, l + 1);
+    r = r && bibtex_entry_group_contents_1(b, l + 1);
+    exit_section_(b, m, BIBTEX_ENTRY_GROUP_CONTENTS, r);
+    return r;
+  }
+
   // (bibtex_key_value_pair)*
-  private static boolean bibtex_entry_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "bibtex_entry_4")) return false;
+  private static boolean bibtex_entry_group_contents_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "bibtex_entry_group_contents_1")) return false;
     int c = current_position_(b);
     while (true) {
-      if (!bibtex_entry_4_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "bibtex_entry_4", c)) break;
+      if (!bibtex_entry_group_contents_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "bibtex_entry_group_contents_1", c)) break;
       c = current_position_(b);
     }
     return true;
   }
 
   // (bibtex_key_value_pair)
-  private static boolean bibtex_entry_4_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "bibtex_entry_4_0")) return false;
+  private static boolean bibtex_entry_group_contents_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "bibtex_entry_group_contents_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = bibtex_key_value_pair(b, l + 1);
     exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // CITATION_KEY SEPERATOR
+  public static boolean bibtex_entry_title(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "bibtex_entry_title")) return false;
+    if (!nextTokenIs(b, CITATION_KEY)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, CITATION_KEY, SEPERATOR);
+    exit_section_(b, m, BIBTEX_ENTRY_TITLE, r);
     return r;
   }
 
@@ -185,7 +260,7 @@ public class BibtexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // bibtex_key ASSIGNMENT bibtex_value
+  // bibtex_key ASSIGNMENT bibtex_value SEPERATOR
   public static boolean bibtex_key_value_pair(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "bibtex_key_value_pair")) return false;
     if (!nextTokenIs(b, CITATION_KEY)) return false;
@@ -194,18 +269,21 @@ public class BibtexParser implements PsiParser, LightPsiParser {
     r = bibtex_key(b, l + 1);
     r = r && consumeToken(b, ASSIGNMENT);
     r = r && bibtex_value(b, l + 1);
+    r = r && consumeToken(b, SEPERATOR);
     exit_section_(b, m, BIBTEX_KEY_VALUE_PAIR, r);
     return r;
   }
 
   /* ********************************************************** */
-  // QUOTATION_MARK NORMAL_TEXT QUOTATION_MARK
+  // QUOTATION_MARK latex_content QUOTATION_MARK
   public static boolean bibtex_string(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "bibtex_string")) return false;
     if (!nextTokenIs(b, QUOTATION_MARK)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, QUOTATION_MARK, NORMAL_TEXT, QUOTATION_MARK);
+    r = consumeToken(b, QUOTATION_MARK);
+    r = r && latex_content(b, l + 1);
+    r = r && consumeToken(b, QUOTATION_MARK);
     exit_section_(b, m, BIBTEX_STRING, r);
     return r;
   }
@@ -270,18 +348,6 @@ public class BibtexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // no_math_content | math_environment
-  public static boolean content(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "content")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, CONTENT, "<content>");
-    r = no_math_content(b, l + 1);
-    if (!r) r = math_environment(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  /* ********************************************************** */
   // DISPLAY_MATH_START (no_math_content)* DISPLAY_MATH_END
   public static boolean display_math(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "display_math")) return false;
@@ -318,7 +384,7 @@ public class BibtexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // OPEN_BRACE content* CLOSE_BRACE
+  // OPEN_BRACE latex_content* CLOSE_BRACE
   public static boolean group(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "group")) return false;
     if (!nextTokenIs(b, OPEN_BRACE)) return false;
@@ -331,12 +397,12 @@ public class BibtexParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // content*
+  // latex_content*
   private static boolean group_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "group_1")) return false;
     int c = current_position_(b);
     while (true) {
-      if (!content(b, l + 1)) break;
+      if (!latex_content(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "group_1", c)) break;
       c = current_position_(b);
     }
@@ -380,18 +446,15 @@ public class BibtexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // content*
-  public static boolean latexFile(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "latexFile")) return false;
-    Marker m = enter_section_(b, l, _NONE_, LATEX_FILE, "<latex file>");
-    int c = current_position_(b);
-    while (true) {
-      if (!content(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "latexFile", c)) break;
-      c = current_position_(b);
-    }
-    exit_section_(b, l, m, true, false, null);
-    return true;
+  // no_math_content | math_environment
+  public static boolean latex_content(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "latex_content")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, LATEX_CONTENT, "<latex content>");
+    r = no_math_content(b, l + 1);
+    if (!r) r = math_environment(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */
@@ -423,7 +486,7 @@ public class BibtexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // OPEN_BRACKET content* CLOSE_BRACKET
+  // OPEN_BRACKET latex_content* CLOSE_BRACKET
   public static boolean open_group(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "open_group")) return false;
     if (!nextTokenIs(b, OPEN_BRACKET)) return false;
@@ -436,12 +499,12 @@ public class BibtexParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // content*
+  // latex_content*
   private static boolean open_group_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "open_group_1")) return false;
     int c = current_position_(b);
     while (true) {
-      if (!content(b, l + 1)) break;
+      if (!latex_content(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "open_group_1", c)) break;
       c = current_position_(b);
     }

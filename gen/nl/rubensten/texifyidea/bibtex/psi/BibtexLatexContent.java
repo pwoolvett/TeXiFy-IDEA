@@ -5,9 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface BibtexBibtexBraceValue extends PsiElement {
+public interface BibtexLatexContent extends PsiElement {
 
-  @NotNull
-  BibtexLatexContent getLatexContent();
+  @Nullable
+  BibtexMathEnvironment getMathEnvironment();
+
+  @Nullable
+  BibtexNoMathContent getNoMathContent();
 
 }

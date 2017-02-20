@@ -18,12 +18,17 @@
         DISPLAY_MATH_END='\]'
         INLINE_MATH_START='$'
         INLINE_MATH_END='$'
+        OPEN_BRACE='{'
+        CLOSE_BRACE='}'
+        OPEN_BRACKET='['
+        CLOSE_BRACKET=']'
         COMMAND_TOKEN='regexp:\\([a-zA-Z]+|.|\n|\r)'
         COMMENT_TOKEN='regexp:%[^\r\n]*'
         STAR='*'
-        NORMAL_TEXT='regexp:[^\\{}%\[\]$]+'
+        NORMAL_TEXT='regexp:[^@\\{}%\[\]$]+'
+
         COMMAND_TOKEN='regexp:\\([a-zA-Z]+|.|\n|\r)'
-        CITATION_TYPE="regexp:@([^ @'\",\#}{~% ]+)"
+        TYPE_TOKEN='regexp:@([a-zA-Z]+)'
         CITATION_KEY="regexp:[^ @'\",\#}{~% ]+"
         VALUE="regexp:[^ @'\",\#}{~% ]+"
         ASSIGNMENT='='
@@ -35,25 +40,35 @@
 
 // BibTeX
 
-bibtex_entry ::= CITATION_TYPE OPEN_BRACKET VALUE SEPERATOR (bibtex_key_value_pair)* CLOSE_BRACE
+bibtexFile ::= bibtex_content
 
-bibtex_key_value_pair ::= bibtex_key ASSIGNMENT bibtex_value
+bibtex_content ::= (comment | bibtex_entry)*
+
+bibtex_entry ::= TYPE_TOKEN bibtex_entry_group
+
+bibtex_entry_group ::= OPEN_BRACE bibtex_entry_group_contents CLOSE_BRACE
+
+bibtex_entry_group_contents ::= bibtex_entry_title (bibtex_key_value_pair)*
+
+bibtex_entry_title ::= CITATION_KEY SEPERATOR
+
+bibtex_key_value_pair ::= bibtex_key ASSIGNMENT bibtex_value SEPERATOR
 
 bibtex_key ::= CITATION_KEY
 
 bibtex_value ::= bibtex_concatenate_value | bibtex_brace_value | bibtex_string
 
-bibtex_concatenate_value ::= (bibtex_string) CONCATENATE (bibtex_string | bibtex_concatenate_value)
+bibtex_concatenate_value ::= bibtex_string CONCATENATE (bibtex_string | bibtex_concatenate_value)
 
-bibtex_brace_value ::= OPEN_BRACE NORMAL_TEXT CLOSE_BRACE
+bibtex_brace_value ::= OPEN_BRACE latex_content CLOSE_BRACE
 
-bibtex_string ::= QUOTATION_MARK NORMAL_TEXT QUOTATION_MARK
+bibtex_string ::= QUOTATION_MARK latex_content QUOTATION_MARK
 
 // LaTeX
 
-latexFile ::= content*
+//latexFile ::= content*
 
-content ::= no_math_content | math_environment
+latex_content ::= no_math_content | math_environment
 
 no_math_content ::= comment | commands | group | open_group | NORMAL_TEXT
 
@@ -65,9 +80,9 @@ optional_param ::= open_group
 
 required_param ::= group
 
-group ::= OPEN_BRACE content* CLOSE_BRACE
+group ::= OPEN_BRACE latex_content* CLOSE_BRACE
 
-open_group ::= OPEN_BRACKET content* CLOSE_BRACKET
+open_group ::= OPEN_BRACKET latex_content* CLOSE_BRACKET
 
 comment ::= COMMENT_TOKEN
 

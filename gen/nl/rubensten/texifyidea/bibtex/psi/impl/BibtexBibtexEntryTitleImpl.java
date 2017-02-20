@@ -1,20 +1,24 @@
 // This is a generated file. Not intended for manual editing.
 package nl.rubensten.texifyidea.bibtex.psi.impl;
 
+import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
+import static nl.rubensten.texifyidea.bibtex.psi.BibtexTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import nl.rubensten.texifyidea.bibtex.psi.*;
 
-public class BibtexContentImpl extends ASTWrapperPsiElement implements BibtexContent {
+public class BibtexBibtexEntryTitleImpl extends ASTWrapperPsiElement implements BibtexBibtexEntryTitle {
 
-  public BibtexContentImpl(ASTNode node) {
+  public BibtexBibtexEntryTitleImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull BibtexVisitor visitor) {
-    visitor.visitContent(this);
+    visitor.visitBibtexEntryTitle(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -23,15 +27,9 @@ public class BibtexContentImpl extends ASTWrapperPsiElement implements BibtexCon
   }
 
   @Override
-  @Nullable
-  public BibtexMathEnvironment getMathEnvironment() {
-    return findChildByClass(BibtexMathEnvironment.class);
-  }
-
-  @Override
-  @Nullable
-  public BibtexNoMathContent getNoMathContent() {
-    return findChildByClass(BibtexNoMathContent.class);
+  @NotNull
+  public PsiElement getCitationKey() {
+    return findNotNullChildByType(CITATION_KEY);
   }
 
 }

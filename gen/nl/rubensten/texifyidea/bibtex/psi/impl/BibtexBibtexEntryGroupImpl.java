@@ -11,14 +11,14 @@ import static nl.rubensten.texifyidea.bibtex.psi.BibtexTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import nl.rubensten.texifyidea.bibtex.psi.*;
 
-public class BibtexCommentImpl extends ASTWrapperPsiElement implements BibtexComment {
+public class BibtexBibtexEntryGroupImpl extends ASTWrapperPsiElement implements BibtexBibtexEntryGroup {
 
-  public BibtexCommentImpl(ASTNode node) {
+  public BibtexBibtexEntryGroupImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull BibtexVisitor visitor) {
-    visitor.visitComment(this);
+    visitor.visitBibtexEntryGroup(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,8 +28,8 @@ public class BibtexCommentImpl extends ASTWrapperPsiElement implements BibtexCom
 
   @Override
   @NotNull
-  public PsiElement getCommentToken() {
-    return findNotNullChildByType(COMMENT_TOKEN);
+  public BibtexBibtexEntryGroupContents getBibtexEntryGroupContents() {
+    return findNotNullChildByClass(BibtexBibtexEntryGroupContents.class);
   }
 
 }

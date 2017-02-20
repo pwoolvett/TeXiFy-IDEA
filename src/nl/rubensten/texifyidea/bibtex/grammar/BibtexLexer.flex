@@ -2,7 +2,6 @@ package nl.rubensten.texifyidea.bibtex.grammar;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
-import org.intellij.grammar.psi.BnfTypes;
 
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
 import static com.intellij.psi.TokenType.WHITE_SPACE;
@@ -36,11 +35,10 @@ CLOSE_BRACKET="]"
 OPEN_BRACE="{"
 CLOSE_BRACE="}"
 
-WHITE_SPACE=[ \t\n\x0B\f\r]+
 COMMAND_TOKEN=\\([a-zA-Z]+|.|\n|\r)
 COMMENT_TOKEN=%[^\r\n]*
 NORMAL_TEXT=[^\\{}%\[\]$]+
-CITATION_TYPE=@([^ @'\",\#}{~% ]+)
+TYPE_TOKEN=@([a-zA-Z]+)
 CITATION_KEY=[^ @'\",\#}{~% ]+
 VALUE=[^ @'\",\#}{~% ]+
 
@@ -69,7 +67,7 @@ VALUE=[^ @'\",\#}{~% ]+
 {COMMAND_TOKEN}      { return COMMAND_TOKEN; }
 {COMMENT_TOKEN}      { return COMMENT_TOKEN; }
 {NORMAL_TEXT}        { return NORMAL_TEXT; }
-{CITATION_TYPE}      { return CITATION_TYPE; }
+{TYPE_TOKEN}         { return TYPE_TOKEN; }
 {CITATION_KEY}       { return CITATION_KEY; }
 {VALUE}              { return VALUE; }
 
