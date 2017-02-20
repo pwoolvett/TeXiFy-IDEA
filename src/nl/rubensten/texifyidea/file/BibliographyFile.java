@@ -3,7 +3,7 @@ package nl.rubensten.texifyidea.file;
 import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;
-import nl.rubensten.texifyidea.LatexLanguage;
+import nl.rubensten.texifyidea.BibtexLanguage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,7 +15,7 @@ import javax.swing.*;
 public class BibliographyFile extends PsiFileBase {
 
     public BibliographyFile(@NotNull FileViewProvider viewProvider) {
-        super(viewProvider, LatexLanguage.INSTANCE);
+        super(viewProvider, BibtexLanguage.INSTANCE);
     }
 
     @NotNull
